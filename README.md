@@ -1,20 +1,31 @@
 # tree-sitter-dottr
 
-Tree-sitter grammar for [dottr](https://github.com/tkamucheka/dottr)
-manifests (`*.dotfile`). It provides highlighting, highlighting of the shell
-scripts in `shell` blocks, folds, indentation, and text objects.
+A [tree-sitter](https://tree-sitter.github.io/) grammar for
+[dottr](https://github.com/tkamucheka/dottr) manifests (`*.dotfile`), with
+queries for:
+
+* highlighting, including the shell scripts of `shell` blocks, highlighted
+  as bash or zsh;
+* folds and indentation;
+* text objects for units, blocks, conditionals, and variables.
+
+Diagnostics, navigation, completion, and formatting are provided by the dottr
+language server, `dottr-lsp`, which is installed with dottr.
+
+## Requirements
+
+* Neovim 0.12 or later
+* [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter), `main`
+  branch, with its requirements: `curl`, `tar`, the tree-sitter CLI, and a C
+  compiler
 
 ## Installation
 
-### Neovim
+### With gardener.nvim
 
-Requirements: Neovim 0.12 or later and
-[nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) on its
-`main` branch, with its own requirements (`curl`, `tar`, the tree-sitter CLI,
-and a C compiler).
-
-With [gardener.nvim](https://github.com/tkamucheka/gardener.nvim) and
-[lazy.nvim](https://github.com/folke/lazy.nvim):
+[gardener.nvim](https://github.com/tkamucheka/gardener.nvim) installs the
+parser when a manifest is first opened and starts highlighting, folds, and
+indentation. With [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
 {
@@ -38,13 +49,11 @@ With [gardener.nvim](https://github.com/tkamucheka/gardener.nvim) and
 }
 ```
 
-gardener installs the parser when a manifest is first opened, together with
-the `bash` and `zsh` parsers used for shell scripts, and starts highlighting,
-folds, and indentation in manifests.
+The `bash` and `zsh` parsers highlight the scripts of `shell` blocks.
 
-### Neovim without gardener
+### With nvim-treesitter
 
-Register the parser with nvim-treesitter:
+Register the parser:
 
 ```lua
 vim.api.nvim_create_autocmd("User", {
@@ -70,15 +79,14 @@ vim.wo[0][0].foldmethod = "expr"
 vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 ```
 
-In either case, to use a local clone instead of the repository, replace `url`
-with `path = "/path/to/tree-sitter-dottr"`; its queries are then linked
-rather than copied.
+To install from a local clone, replace `url` with
+`path = "/path/to/tree-sitter-dottr"` in either configuration.
 
 ### Other editors
 
-The repository contains the generated parser in `src/`, so an editor that
-builds tree-sitter grammars from source needs no generation step. The queries
-are in `queries/`.
+The repository includes the generated parser in `src/` and the queries in
+`queries/`, so editors that build tree-sitter grammars from source need no
+generation step.
 
 ## Configuration
 
@@ -88,18 +96,18 @@ Map the file extension to the `dottr` filetype:
 vim.filetype.add({ extension = { dotfile = "dottr" } })
 ```
 
-and set the comment string, in `ftplugin/dottr.lua`:
+and set the comment string in `ftplugin/dottr.lua`:
 
 ```lua
 vim.bo.commentstring = "# %s"
 ```
 
-### Text objects
+### Text Objects
 
 `queries/textobjects.scm` uses the capture names of
 [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects),
-which also work with
-[mini.ai](https://github.com/echasnovski/mini.ai)'s `gen_spec.treesitter`.
+which also work with the `gen_spec.treesitter` text objects of
+[mini.ai](https://github.com/echasnovski/mini.ai).
 
 | Capture | Outer | Inner |
 |---------|-------|-------|
@@ -110,15 +118,28 @@ which also work with
 | `@parameter` | A unit name in `needs` | The same |
 | `@statement`, `@comment`, `@string` | The node | |
 
+For example, with mini.ai:
+
+```lua
+local spec = require("mini.ai").gen_spec.treesitter
+require("mini.ai").setup({
+  custom_textobjects = {
+    F = spec({ a = "@function.outer", i = "@function.inner" }),
+    o = spec({ a = "@block.outer", i = "@block.inner" }),
+    c = spec({ a = "@conditional.outer", i = "@conditional.inner" }),
+  },
+})
+```
+
 ## Queries
 
 | Query | Provides |
 |-------|----------|
 | `highlights.scm` | Highlighting, with Neovim's standard capture names. |
-| `injections.scm` | The text of a `shell` block as `zsh` for ` ```zsh ` and as `bash` otherwise, without the block's indentation. |
+| `injections.scm` | Shell scripts, as `zsh` for ` ```zsh ` blocks and as `bash` otherwise, without the indentation of the block. |
 | `folds.scm` | Folds for units, `apply` blocks, `else` branches, and `shell` blocks. |
-| `indents.scm` | Indentation; shell text keeps the indentation of the previous line. |
-| `textobjects.scm` | Text objects (above). |
+| `indents.scm` | Indentation; lines of a shell script keep the indentation of the previous line. |
+| `textobjects.scm` | Text objects. |
 | `locals.scm`, `tags.scm` | Scopes, definitions, and references. |
 
 ## Development
