@@ -1,0 +1,111 @@
+================================================================================
+Escapes
+================================================================================
+
+pkg a do
+  local A = "say \"hi\" \\ bye"
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (local_statement
+        (identifier)
+        (string
+          (string_content)
+          (escape_sequence)
+          (string_content)
+          (escape_sequence)
+          (string_content)
+          (escape_sequence)
+          (string_content))))))
+
+================================================================================
+Interpolation
+================================================================================
+
+pkg a do
+  local A = "@{dottr.env.home}/@{B}@{C}"
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (local_statement
+        (identifier)
+        (string
+          (interpolation
+            (reference))
+          (string_content)
+          (interpolation
+            (reference))
+          (interpolation
+            (reference)))))))
+
+================================================================================
+Lone at sign
+================================================================================
+
+pkg a do
+  local A = "user@host @ end@"
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (local_statement
+        (identifier)
+        (string
+          (string_content)
+          (string_content)
+          (string_content)
+          (string_content)
+          (string_content)
+          (string_content))))))
+
+================================================================================
+Empty string value
+================================================================================
+
+pkg a do
+  local A = ""
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (local_statement
+        (identifier)
+        (string)))))
+
+================================================================================
+Hash inside a string
+================================================================================
+
+pkg a do
+  local A = "#not a comment" # comment
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (local_statement
+        (identifier)
+        (string
+          (string_content)))
+      (comment))))

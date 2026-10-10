@@ -1,0 +1,70 @@
+# A manifest exercising every highlighted construct.
+# <- comment
+pkg git
+# <- keyword
+#   ^ module
+
+pkg "tree-sitter-cli"
+#   ^ module
+
+pkg tmux do
+# <- keyword
+#   ^ module
+#        ^ keyword
+  local TPM_DIR = "@{dottr.env.home}/tpm"
+# ^ keyword
+#       ^ variable
+#               ^ operator
+#                 ^ string
+#                  ^ punctuation.special
+#                    ^ variable.builtin
+#                                   ^ string
+  local QUOTED = "say \"hi\" @{TPM_DIR}"
+#                     ^ string.escape
+#                              ^ variable
+  needs git, "tree-sitter-cli"
+# ^ keyword.import
+#       ^ module
+#          ^ punctuation.delimiter
+#             ^ module
+  pkg tmux
+# ^ keyword
+#     ^ module
+  check directory TPM_DIR
+# ^ keyword
+#       ^ type.builtin
+#                 ^ variable
+  create directory TPM_DIR
+# ^ keyword
+#        ^ type.builtin
+#                  ^ variable
+  apply_if TPM_DIR do
+# ^ keyword.conditional
+#          ^ variable
+#                  ^ keyword
+    shell do
+#   ^ keyword
+      ```sh
+#     ^ punctuation.delimiter
+#        ^ label
+      git -C "$TPM_DIR" pull --ff-only
+      ```
+    end
+#   ^ keyword
+  else
+# ^ keyword.conditional
+    shell do
+      ```
+      git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
+      ```
+#     ^ punctuation.delimiter
+    end
+  end
+  apply_unless TPM_DIR do
+# ^ keyword.conditional
+  end
+  apply do
+# ^ keyword
+  end
+end
+# <- keyword

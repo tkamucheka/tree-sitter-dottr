@@ -1,0 +1,59 @@
+================================================================================
+Comments
+================================================================================
+
+# leading
+pkg a # after a name
+pkg b do # after do
+  # inside
+  needs a # after a statement
+end # after end
+# trailing
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (unit_declaration
+    (identifier))
+  (comment)
+  (unit_declaration
+    (identifier)
+    (comment)
+    (comment)
+    (unit_body
+      (needs_statement
+        (identifier))
+      (comment)))
+  (comment)
+  (comment))
+
+================================================================================
+Carriage returns
+================================================================================
+
+pkg a do
+  apply do
+    shell do
+      ```sh
+      echo
+      ```
+    end
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (apply_statement
+        (action_body
+          (shell_block
+            (raw_block
+              (fence_open)
+              (info_string)
+              (raw_content
+                (raw_line))
+              (fence_close))))))))

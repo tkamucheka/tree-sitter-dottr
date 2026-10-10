@@ -1,0 +1,244 @@
+================================================================================
+Info strings
+================================================================================
+
+pkg a do
+  apply do
+    shell do
+      ```sh
+      echo
+      ```
+    end
+    shell do
+      ```bash
+      echo
+      ```
+    end
+    shell do
+      ```zsh
+      echo
+      ```
+    end
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (apply_statement
+        (action_body
+          (shell_block
+            (raw_block
+              (fence_open)
+              (info_string)
+              (raw_content
+                (raw_line))
+              (fence_close)))
+          (shell_block
+            (raw_block
+              (fence_open)
+              (info_string)
+              (raw_content
+                (raw_line))
+              (fence_close)))
+          (shell_block
+            (raw_block
+              (fence_open)
+              (info_string)
+              (raw_content
+                (raw_line))
+              (fence_close))))))))
+
+================================================================================
+Empty raw block
+================================================================================
+
+pkg a do
+  apply do
+    shell do
+      ```
+      ```
+    end
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (apply_statement
+        (action_body
+          (shell_block
+            (raw_block
+              (fence_open)
+              (fence_close))))))))
+
+================================================================================
+Raw block contents are not tokenized
+================================================================================
+
+pkg a do
+  apply do
+    shell do
+      ```
+      if true; then
+        echo "end" # else
+      else
+        git rev-parse @{u}
+      fi
+      ```
+    end
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (apply_statement
+        (action_body
+          (shell_block
+            (raw_block
+              (fence_open)
+              (raw_content
+                (raw_line)
+                (raw_line)
+                (raw_line)
+                (raw_line)
+                (raw_line))
+              (fence_close))))))))
+
+================================================================================
+Blank lines and heredoc in raw block
+================================================================================
+
+pkg a do
+  apply do
+    shell do
+      ```
+      cat <<EOF
+
+        indented
+      EOF
+      ```
+    end
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (apply_statement
+        (action_body
+          (shell_block
+            (raw_block
+              (fence_open)
+              (raw_content
+                (raw_line)
+                (raw_line)
+                (raw_line)
+                (raw_line))
+              (fence_close))))))))
+
+================================================================================
+Closing fence less indented than the opening fence
+================================================================================
+
+pkg a do
+  apply do
+    shell do
+      ```
+      echo
+  ```
+    end
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (apply_statement
+        (action_body
+          (shell_block
+            (raw_block
+              (fence_open)
+              (raw_content
+                (raw_line))
+              (fence_close))))))))
+
+================================================================================
+Line that only resembles a fence
+================================================================================
+
+pkg a do
+  apply do
+    shell do
+      ```
+      ```not a fence
+      ``` # also not a fence
+      ```
+    end
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (apply_statement
+        (action_body
+          (shell_block
+            (raw_block
+              (fence_open)
+              (raw_content
+                (raw_line)
+                (raw_line))
+              (fence_close))))))))
+
+================================================================================
+Blank line and comment around a raw block
+================================================================================
+
+pkg a do
+  apply do
+    shell do
+
+      # before
+      ```
+      echo
+      ```
+
+    end
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (apply_statement
+        (action_body
+          (shell_block
+            (comment)
+            (raw_block
+              (fence_open)
+              (raw_content
+                (raw_line))
+              (fence_close))))))))

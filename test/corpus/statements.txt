@@ -1,0 +1,240 @@
+================================================================================
+Local
+================================================================================
+
+pkg a do
+  local DIR = "@{dottr.env.home}/x"
+  local B="@{DIR}"
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (local_statement
+        (identifier)
+        (string
+          (interpolation
+            (reference))
+          (string_content)))
+      (local_statement
+        (identifier)
+        (string
+          (interpolation
+            (reference)))))))
+
+================================================================================
+Check and create
+================================================================================
+
+pkg a do
+  local D = "d"
+  check command D
+  check file D
+  check directory D
+  create directory D
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (local_statement
+        (identifier)
+        (string
+          (string_content)))
+      (check_statement
+        (predicate_kind)
+        (identifier))
+      (check_statement
+        (predicate_kind)
+        (identifier))
+      (check_statement
+        (predicate_kind)
+        (identifier))
+      (create_statement
+        (predicate_kind)
+        (identifier)))))
+
+================================================================================
+Apply
+================================================================================
+
+pkg a do
+  apply do
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (apply_statement))))
+
+================================================================================
+Apply if with else
+================================================================================
+
+pkg a do
+  local D = "d"
+  check directory D
+  apply_if D do
+    shell do
+      ```
+      echo yes
+      ```
+    end
+  else
+    shell do
+      ```
+      echo no
+      ```
+    end
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (local_statement
+        (identifier)
+        (string
+          (string_content)))
+      (check_statement
+        (predicate_kind)
+        (identifier))
+      (apply_if_statement
+        (identifier)
+        (action_body
+          (shell_block
+            (raw_block
+              (fence_open)
+              (raw_content
+                (raw_line))
+              (fence_close))))
+        (else_clause
+          (action_body
+            (shell_block
+              (raw_block
+                (fence_open)
+                (raw_content
+                  (raw_line))
+                (fence_close)))))))))
+
+================================================================================
+Apply if without else
+================================================================================
+
+pkg a do
+  apply_if D do
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (apply_if_statement
+        (identifier)))))
+
+================================================================================
+Apply if with empty branches
+================================================================================
+
+pkg a do
+  apply_if D do
+  else
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (apply_if_statement
+        (identifier)
+        (else_clause)))))
+
+================================================================================
+Apply unless
+================================================================================
+
+pkg a do
+  apply_unless D do
+    shell do
+      ```
+      true
+      ```
+    end
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (apply_unless_statement
+        (identifier)
+        (action_body
+          (shell_block
+            (raw_block
+              (fence_open)
+              (raw_content
+                (raw_line))
+              (fence_close))))))))
+
+================================================================================
+Several shell blocks
+================================================================================
+
+pkg a do
+  apply do
+    shell do
+      ```
+      one
+      ```
+    end
+
+    shell do
+      ```
+      two
+      ```
+    end
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (apply_statement
+        (action_body
+          (shell_block
+            (raw_block
+              (fence_open)
+              (raw_content
+                (raw_line))
+              (fence_close)))
+          (shell_block
+            (raw_block
+              (fence_open)
+              (raw_content
+                (raw_line))
+              (fence_close))))))))
