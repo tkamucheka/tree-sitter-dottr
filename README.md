@@ -148,3 +148,7 @@ require("mini.ai").setup({
 tree-sitter generate   # after editing grammar.js; commit the regenerated src/
 tree-sitter test       # corpus and highlight tests
 ```
+
+## License
+
+MIT; see [LICENSE](LICENSE).
