@@ -23,9 +23,10 @@ language server, `dottr-lsp`, which is installed with dottr.
 
 ### With gardener.nvim
 
-[gardener.nvim](https://github.com/tkamucheka/gardener.nvim) installs the
-parser when a manifest is first opened and starts highlighting, folds, and
-indentation. With [lazy.nvim](https://github.com/folke/lazy.nvim):
+[gardener.nvim](https://github.com/tkamucheka/gardener.nvim) detects
+manifests by their extension, installs the parser when a manifest is first
+opened, and starts highlighting, folds, and indentation. With
+[lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
 {
@@ -41,6 +42,7 @@ indentation. With [lazy.nvim](https://github.com/folke/lazy.nvim):
           queries = "queries",
         },
         filetypes = { "dottr" },
+        extensions = { "dotfile" },
       },
     },
     manage_folds = true,
@@ -51,9 +53,16 @@ indentation. With [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 The `bash` and `zsh` parsers highlight the scripts of `shell` blocks.
 
-### With nvim-treesitter
+### Without gardener.nvim
 
-Register the parser:
+Without gardener, the steps it performs are configured by hand. Map the file
+extension to the `dottr` filetype:
+
+```lua
+vim.filetype.add({ extension = { dotfile = "dottr" } })
+```
+
+Register the parser with nvim-treesitter:
 
 ```lua
 vim.api.nvim_create_autocmd("User", {
@@ -90,13 +99,7 @@ generation step.
 
 ## Configuration
 
-Map the file extension to the `dottr` filetype:
-
-```lua
-vim.filetype.add({ extension = { dotfile = "dottr" } })
-```
-
-and set the comment string in `ftplugin/dottr.lua`:
+Set the comment string in `ftplugin/dottr.lua`:
 
 ```lua
 vim.bo.commentstring = "# %s"
