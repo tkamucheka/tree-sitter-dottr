@@ -12,6 +12,7 @@
 const KEYWORDS = [
   'pkg', 'do', 'end', 'local', 'needs', 'check', 'create', 'apply',
   'apply_if', 'apply_unless', 'else', 'shell', 'command', 'file', 'directory',
+  'on',
 ];
 
 module.exports = grammar({
@@ -39,9 +40,54 @@ module.exports = grammar({
 
   rules: {
     source_file: $ => repeat(choice(
-      seq($.unit_declaration, $._terminator),
+      seq($._declaration, $._terminator),
       $._newline,
     )),
+
+    _declaration: $ => choice(
+      $.unit_declaration,
+      alias($._on_declarations, $.on_block),
+    ),
+
+    // `on` blocks select their contents by system. They contain units at
+    // top level, statements in a unit, and shell blocks in an action body;
+    // each form is an on_block whose body is of the enclosing kind.
+    _on_declarations: $ => seq(
+      'on',
+      $._systems,
+      'do',
+      $._newline,
+      optional(field('body', $.unit_list)),
+      'end',
+    ),
+
+    unit_list: $ => repeat1(choice(
+      seq($._declaration, $._terminator),
+      $._newline,
+    )),
+
+    _on_statements: $ => seq(
+      'on',
+      $._systems,
+      'do',
+      $._newline,
+      optional(field('body', $.unit_body)),
+      'end',
+    ),
+
+    _on_actions: $ => seq(
+      'on',
+      $._systems,
+      'do',
+      $._newline,
+      optional(field('body', $.action_body)),
+      'end',
+    ),
+
+    _systems: $ => seq(
+      field('system', alias($.identifier, $.system)),
+      repeat(seq(',', field('system', alias($.identifier, $.system)))),
+    ),
 
     // A statement ends at a line end, or at the end of input on the last
     // line. The terminator belongs to the enclosing node, so that the node of
@@ -73,6 +119,7 @@ module.exports = grammar({
       $.apply_statement,
       $.apply_if_statement,
       $.apply_unless_statement,
+      alias($._on_statements, $.on_block),
     ),
 
     local_statement: $ => seq(
@@ -141,7 +188,8 @@ module.exports = grammar({
     ),
 
     action_body: $ => repeat1(choice(
-      seq($.shell_block, $._terminator),
+      seq(choice($.shell_block, alias($._on_actions, $.on_block)),
+        $._terminator),
       $._newline,
     )),
 

@@ -116,7 +116,7 @@ which also work with the `gen_spec.treesitter` text objects of
 |---------|-------|-------|
 | `@function` | A unit | The statements of a block unit |
 | `@block` | An `apply` or `shell` block | Its body; for `shell`, the script |
-| `@conditional` | An `apply_if` or `apply_unless` block | The statements of a branch |
+| `@conditional` | An `apply_if`, `apply_unless`, or `on` block | The statements of a branch or block |
 | `@assignment` | A `local` statement | Its value |
 | `@parameter` | A unit name in `needs` | The same |
 | `@statement`, `@comment`, `@string` | The node | |
@@ -140,7 +140,7 @@ require("mini.ai").setup({
 |-------|----------|
 | `highlights.scm` | Highlighting, with Neovim's standard capture names. |
 | `injections.scm` | Shell scripts, as `zsh` for ` ```zsh ` blocks and as `bash` otherwise, without the indentation of the block. |
-| `folds.scm` | Folds for units, `apply` blocks, `else` branches, and `shell` blocks. |
+| `folds.scm` | Folds for units, `apply` blocks, `else` branches, `on` blocks, and `shell` blocks. |
 | `indents.scm` | Indentation; lines of a shell script keep the indentation of the previous line. |
 | `textobjects.scm` | Text objects. |
 | `locals.scm`, `tags.scm` | Scopes, definitions, and references. |

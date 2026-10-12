@@ -68,3 +68,10 @@ pkg tmux do
   end
 end
 # <- keyword
+
+on macos, windows do
+# <- keyword.conditional
+#  ^ constant.builtin
+#         ^ constant.builtin
+  pkg rectangle
+end

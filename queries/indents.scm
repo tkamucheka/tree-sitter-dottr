@@ -4,6 +4,7 @@
   (apply_if_statement)
   (apply_unless_statement)
   (shell_block)
+  (on_block)
 ] @indent.begin
 
 [

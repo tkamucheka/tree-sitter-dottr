@@ -17,7 +17,10 @@
   "apply_if"
   "apply_unless"
   "else"
+  "on"
 ] @keyword.conditional
+
+(system) @constant.builtin
 
 (predicate_kind) @type.builtin
 

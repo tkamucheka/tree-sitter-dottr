@@ -44,6 +44,15 @@
     .
     (_)+ @conditional.inner))
 
+; on blocks
+
+(on_block) @conditional.outer
+
+(on_block
+  body: (_
+    .
+    (_)+ @conditional.inner))
+
 ; Statements
 
 (local_statement) @assignment.outer
@@ -65,6 +74,7 @@
   (apply_if_statement)
   (apply_unless_statement)
   (shell_block)
+  (on_block)
 ] @statement.outer
 
 (comment) @comment.outer

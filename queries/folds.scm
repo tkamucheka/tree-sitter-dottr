@@ -5,4 +5,5 @@
   (apply_unless_statement)
   (else_clause)
   (shell_block)
+  (on_block)
 ] @fold

@@ -1,0 +1,109 @@
+================================================================================
+On block at top level
+================================================================================
+
+on macos, windows do
+  pkg rectangle
+  on windows do
+    pkg "Microsoft.PowerToys"
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (on_block
+    (system)
+    (system)
+    (unit_list
+      (unit_declaration
+        (identifier))
+      (on_block
+        (system)
+        (unit_list
+          (unit_declaration
+            (string
+              (string_content))))))))
+
+================================================================================
+On block in a unit
+================================================================================
+
+pkg fd do
+  on apt do
+    pkg "fd-find"
+  end
+  on pacman, dnf, brew do
+    pkg fd
+    local X = "x"
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (on_block
+        (system)
+        (unit_body
+          (child_package
+            (string
+              (string_content)))))
+      (on_block
+        (system)
+        (system)
+        (system)
+        (unit_body
+          (child_package
+            (identifier))
+          (local_statement
+            (identifier)
+            (string
+              (string_content))))))))
+
+================================================================================
+On block in an action body
+================================================================================
+
+pkg a do
+  apply do
+    on windows do
+      shell do
+        ```
+        echo
+        ```
+      end
+    end
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (apply_statement
+        (action_body
+          (on_block
+            (system)
+            (action_body
+              (shell_block
+                (raw_block
+                  (fence_open)
+                  (raw_content
+                    (raw_line))
+                  (fence_close))))))))))
+
+================================================================================
+On is reserved
+:error
+================================================================================
+
+pkg a do
+  local on = "x"
+end
+
+--------------------------------------------------------------------------------

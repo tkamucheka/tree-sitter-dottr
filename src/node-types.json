@@ -8,6 +8,10 @@
       "required": false,
       "types": [
         {
+          "type": "on_block",
+          "named": true
+        },
+        {
           "type": "shell_block",
           "named": true
         }
@@ -243,6 +247,40 @@
     }
   },
   {
+    "type": "on_block",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "action_body",
+            "named": true
+          },
+          {
+            "type": "unit_body",
+            "named": true
+          },
+          {
+            "type": "unit_list",
+            "named": true
+          }
+        ]
+      },
+      "system": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "system",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "predicate_kind",
     "named": true,
     "fields": {}
@@ -334,6 +372,10 @@
       "required": false,
       "types": [
         {
+          "type": "on_block",
+          "named": true
+        },
+        {
           "type": "unit_declaration",
           "named": true
         }
@@ -402,6 +444,10 @@
         {
           "type": "needs_statement",
           "named": true
+        },
+        {
+          "type": "on_block",
+          "named": true
         }
       ]
     }
@@ -434,6 +480,25 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "unit_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "on_block",
+          "named": true
+        },
+        {
+          "type": "unit_declaration",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -530,6 +595,10 @@
     "named": false
   },
   {
+    "type": "on",
+    "named": false
+  },
+  {
     "type": "pkg",
     "named": false
   },
@@ -547,6 +616,10 @@
   },
   {
     "type": "string_content",
+    "named": true
+  },
+  {
+    "type": "system",
     "named": true
   },
   {
