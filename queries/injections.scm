@@ -25,5 +25,13 @@
   (#eq? @_info "zsh")
   (#set! injection.language "zsh"))
 
+((raw_block
+  info: (info_string) @_info
+  content: (raw_content
+    .
+    (raw_line)+ @injection.content))
+  (#any-of? @_info "pwsh" "powershell")
+  (#set! injection.language "powershell"))
+
 ((comment) @injection.content
   (#set! injection.language "comment"))

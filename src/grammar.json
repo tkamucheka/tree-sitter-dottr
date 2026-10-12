@@ -857,6 +857,14 @@
           {
             "type": "STRING",
             "value": "zsh"
+          },
+          {
+            "type": "STRING",
+            "value": "pwsh"
+          },
+          {
+            "type": "STRING",
+            "value": "powershell"
           }
         ]
       }

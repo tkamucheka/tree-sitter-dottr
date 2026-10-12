@@ -4,8 +4,8 @@ A [tree-sitter](https://tree-sitter.github.io/) grammar for
 [dottr](https://github.com/tkamucheka/dottr) manifests (`*.dotfile`), with
 queries for:
 
-* highlighting, including the shell scripts of `shell` blocks, highlighted
-  as bash or zsh;
+* highlighting, including the scripts of `shell` blocks, highlighted as
+  bash, zsh, or PowerShell;
 * folds and indentation;
 * text objects for units, blocks, conditionals, and variables.
 
@@ -34,7 +34,7 @@ opened, and starts highlighting, folds, and indentation. With
   dependencies = { "nvim-treesitter/nvim-treesitter" },
   lazy = false,
   opts = {
-    ensure_installed = { "bash", "zsh" },
+    ensure_installed = { "bash", "zsh", "powershell" },
     custom_parsers = {
       dottr = {
         install_info = {
@@ -51,7 +51,8 @@ opened, and starts highlighting, folds, and indentation. With
 }
 ```
 
-The `bash` and `zsh` parsers highlight the scripts of `shell` blocks.
+The `bash`, `zsh`, and `powershell` parsers highlight the scripts of `shell`
+blocks.
 
 ### Without gardener.nvim
 
@@ -78,7 +79,7 @@ vim.api.nvim_create_autocmd("User", {
 })
 ```
 
-Install it with `:TSInstall dottr bash zsh`, and start highlighting, folds,
+Install it with `:TSInstall dottr bash zsh powershell`, and start highlighting, folds,
 and indentation in `ftplugin/dottr.lua`:
 
 ```lua
@@ -139,7 +140,7 @@ require("mini.ai").setup({
 | Query | Provides |
 |-------|----------|
 | `highlights.scm` | Highlighting, with Neovim's standard capture names. |
-| `injections.scm` | Shell scripts, as `zsh` for ` ```zsh ` blocks and as `bash` otherwise, without the indentation of the block. |
+| `injections.scm` | Shell scripts, as `zsh` for ` ```zsh ` blocks, as `powershell` for ` ```pwsh ` and ` ```powershell ` blocks, and as `bash` otherwise, without the indentation of the block. |
 | `folds.scm` | Folds for units, `apply` blocks, `else` branches, `on` blocks, and `shell` blocks. |
 | `indents.scm` | Indentation; lines of a shell script keep the indentation of the previous line. |
 | `textobjects.scm` | Text objects. |

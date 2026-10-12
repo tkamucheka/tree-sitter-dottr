@@ -53,6 +53,48 @@ end
               (fence_close))))))))
 
 ================================================================================
+PowerShell info strings
+================================================================================
+
+pkg a do
+  apply do
+    shell do
+      ```pwsh
+      Write-Output $env:A
+      ```
+    end
+    shell do
+      ```powershell
+      Write-Output $env:A
+      ```
+    end
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (apply_statement
+        (action_body
+          (shell_block
+            (raw_block
+              (fence_open)
+              (info_string)
+              (raw_content
+                (raw_line))
+              (fence_close)))
+          (shell_block
+            (raw_block
+              (fence_open)
+              (info_string)
+              (raw_content
+                (raw_line))
+              (fence_close))))))))
+
+================================================================================
 Empty raw block
 ================================================================================
 

@@ -210,7 +210,9 @@ module.exports = grammar({
       field('close', $.fence_close),
     ),
 
-    info_string: _ => token.immediate(choice('sh', 'bash', 'zsh')),
+    info_string: _ => token.immediate(
+      choice('sh', 'bash', 'zsh', 'pwsh', 'powershell'),
+    ),
 
     raw_content: $ => repeat1($.raw_line),
 
