@@ -1,3 +1,5 @@
+![A dottr manifest and its tree-sitter syntax tree](.github/banner.svg)
+
 # tree-sitter-dottr
 
 A [tree-sitter](https://tree-sitter.github.io/) grammar for
