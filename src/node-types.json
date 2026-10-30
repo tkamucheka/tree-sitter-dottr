@@ -436,6 +436,10 @@
           "named": true
         },
         {
+          "type": "systems_declaration",
+          "named": true
+        },
+        {
           "type": "unit_declaration",
           "named": true
         }
@@ -463,6 +467,22 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "systems_declaration",
+    "named": true,
+    "fields": {
+      "system": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "system",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -697,6 +717,10 @@
   {
     "type": "system",
     "named": true
+  },
+  {
+    "type": "systems",
+    "named": false
   },
   {
     "type": "tree",

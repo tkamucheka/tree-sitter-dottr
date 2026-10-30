@@ -1,5 +1,14 @@
 # A manifest exercising every highlighted construct.
 # <- comment
+systems arch,
+# <- keyword
+#       ^ constant.builtin
+        debian, fedora, redhat, rhel
+#       ^ constant.builtin
+#               ^ constant.builtin
+#                       ^ constant.builtin
+#                               ^ constant.builtin
+
 pkg git
 # <- keyword
 #   ^ module

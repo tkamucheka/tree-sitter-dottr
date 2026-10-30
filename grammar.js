@@ -10,7 +10,7 @@
 // @ts-check
 
 const KEYWORDS = [
-  'pkg', 'unit', 'do', 'end', 'local', 'needs', 'check', 'create', 'apply',
+  'pkg', 'unit', 'systems', 'do', 'end', 'local', 'needs', 'check', 'create', 'apply',
   'apply_if', 'apply_unless', 'else', 'shell', 'command', 'file', 'directory',
   'on', 'link',
 ];
@@ -39,10 +39,15 @@ module.exports = grammar({
   },
 
   rules: {
-    source_file: $ => repeat(choice(
-      seq($._declaration, $._terminator),
-      $._newline,
-    )),
+    source_file: $ => seq(
+      repeat($._newline),
+      optional(seq(
+        choice($.systems_declaration, $._declaration), $._terminator,
+        repeat(choice(seq($._declaration, $._terminator), $._newline)),
+      )),
+    ),
+
+    systems_declaration: $ => seq('systems', $._systems),
 
     _declaration: $ => choice(
       $.unit_declaration,

@@ -4,29 +4,84 @@
   "word": "identifier",
   "rules": {
     "source_file": {
-      "type": "REPEAT",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_declaration"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_terminator"
-              }
-            ]
-          },
-          {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "REPEAT",
+          "content": {
             "type": "SYMBOL",
             "name": "_newline"
           }
-        ]
-      }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "systems_declaration"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "_declaration"
+                    }
+                  ]
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_terminator"
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SEQ",
+                        "members": [
+                          {
+                            "type": "SYMBOL",
+                            "name": "_declaration"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "_terminator"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "_newline"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "systems_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "systems"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_systems"
+        }
+      ]
     },
     "_declaration": {
       "type": "CHOICE",
@@ -1284,6 +1339,10 @@
       {
         "type": "STRING",
         "value": "unit"
+      },
+      {
+        "type": "STRING",
+        "value": "systems"
       },
       {
         "type": "STRING",

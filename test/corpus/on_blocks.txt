@@ -29,10 +29,10 @@ On block in a unit
 ================================================================================
 
 unit fd do
-  on apt do
+  on debian do
     pkg "fd-find"
   end
-  on pacman, dnf, brew do
+  on arch, fedora, macos do
     pkg fd
     local X = "x"
   end

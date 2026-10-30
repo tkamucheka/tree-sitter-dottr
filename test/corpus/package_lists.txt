@@ -35,9 +35,9 @@ end
 Continued selectors and native links
 ================================================================================
 
-on apt, # systems
+on debian, # systems
 
-   pacman do
+   arch do
   unit files do
     link SOURCE TARGET
     link tree SOURCE TARGET ignore RULES
