@@ -2,7 +2,7 @@
 Local
 ================================================================================
 
-pkg a do
+unit a do
   local DIR = "@{dottr.env.home}/x"
   local B="@{DIR}"
 end
@@ -29,7 +29,7 @@ end
 Check and create
 ================================================================================
 
-pkg a do
+unit a do
   local D = "d"
   check command D
   check file D
@@ -64,7 +64,7 @@ end
 Apply
 ================================================================================
 
-pkg a do
+unit a do
   apply do
   end
 end
@@ -81,7 +81,7 @@ end
 Apply if with else
 ================================================================================
 
-pkg a do
+unit a do
   local D = "d"
   check directory D
   apply_if D do
@@ -134,7 +134,7 @@ end
 Apply if without else
 ================================================================================
 
-pkg a do
+unit a do
   apply_if D do
   end
 end
@@ -152,7 +152,7 @@ end
 Apply if with empty branches
 ================================================================================
 
-pkg a do
+unit a do
   apply_if D do
   else
   end
@@ -172,7 +172,7 @@ end
 Apply unless
 ================================================================================
 
-pkg a do
+unit a do
   apply_unless D do
     shell do
       ```
@@ -202,7 +202,7 @@ end
 Several shell blocks
 ================================================================================
 
-pkg a do
+unit a do
   apply do
     shell do
       ```

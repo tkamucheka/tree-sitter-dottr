@@ -7,10 +7,10 @@ pkg git
 pkg "tree-sitter-cli"
 #   ^ module
 
-pkg tmux do
+unit tmux do
 # <- keyword
-#   ^ module
-#        ^ keyword
+#    ^ module
+#         ^ keyword
   local TPM_DIR = "@{dottr.env.home}/tpm"
 # ^ keyword
 #       ^ variable

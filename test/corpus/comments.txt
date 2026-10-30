@@ -4,7 +4,7 @@ Comments
 
 # leading
 pkg a # after a name
-pkg b do # after do
+unit b do # after do
   # inside
   needs a # after a statement
 end # after end
@@ -14,7 +14,7 @@ end # after end
 
 (source_file
   (comment)
-  (unit_declaration
+  (package_declaration
     (identifier))
   (comment)
   (unit_declaration
@@ -32,7 +32,7 @@ end # after end
 Carriage returns
 ================================================================================
 
-pkg a do
+unit a do
   apply do
     shell do
       ```sh

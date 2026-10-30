@@ -58,7 +58,7 @@ Two statements on one line
 :error
 ================================================================================
 
-pkg a do
+unit a do
   needs b needs c
 end
 
@@ -71,7 +71,7 @@ Shell outside an apply body
 :error
 ================================================================================
 
-pkg a do
+unit a do
   shell do
     ```
     echo
@@ -88,7 +88,7 @@ Else in apply_unless
 :error
 ================================================================================
 
-pkg a do
+unit a do
   apply_unless D do
   else
   end
@@ -103,7 +103,7 @@ Unknown info string
 :error
 ================================================================================
 
-pkg a do
+unit a do
   apply do
     shell do
       ```python
@@ -122,7 +122,7 @@ Unknown escape
 :error
 ================================================================================
 
-pkg a do
+unit a do
   local A = "\n"
 end
 

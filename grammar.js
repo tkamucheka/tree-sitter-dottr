@@ -10,9 +10,9 @@
 // @ts-check
 
 const KEYWORDS = [
-  'pkg', 'do', 'end', 'local', 'needs', 'check', 'create', 'apply',
+  'pkg', 'unit', 'do', 'end', 'local', 'needs', 'check', 'create', 'apply',
   'apply_if', 'apply_unless', 'else', 'shell', 'command', 'file', 'directory',
-  'on',
+  'on', 'link',
 ];
 
 module.exports = grammar({
@@ -46,6 +46,7 @@ module.exports = grammar({
 
     _declaration: $ => choice(
       $.unit_declaration,
+      $.package_declaration,
       alias($._on_declarations, $.on_block),
     ),
 
@@ -86,7 +87,7 @@ module.exports = grammar({
 
     _systems: $ => seq(
       field('system', alias($.identifier, $.system)),
-      repeat(seq(',', field('system', alias($.identifier, $.system)))),
+      repeat(seq(',', repeat($._newline), field('system', alias($.identifier, $.system)))),
     ),
 
     // A statement ends at a line end, or at the end of input on the last
@@ -95,14 +96,18 @@ module.exports = grammar({
     _terminator: $ => choice($._newline, $._end_of_input),
 
     unit_declaration: $ => seq(
+      'unit',
+      field('name', $._unit_name),
+      'do',
+      $._newline,
+      optional(field('body', $.unit_body)),
+      'end',
+    ),
+
+    package_declaration: $ => seq(
       'pkg',
       field('name', $._unit_name),
-      optional(seq(
-        'do',
-        $._newline,
-        optional(field('body', $.unit_body)),
-        'end',
-      )),
+      repeat(seq(',', repeat($._newline), field('name', $._unit_name))),
     ),
 
     unit_body: $ => repeat1(choice(
@@ -113,7 +118,8 @@ module.exports = grammar({
     _statement: $ => choice(
       $.local_statement,
       $.needs_statement,
-      $.child_package,
+      $.package_statement,
+      $.link_statement,
       $.check_statement,
       $.create_statement,
       $.apply_statement,
@@ -132,12 +138,21 @@ module.exports = grammar({
     needs_statement: $ => seq(
       'needs',
       field('dependency', $._unit_name),
-      repeat(seq(',', field('dependency', $._unit_name))),
+      repeat(seq(',', repeat($._newline), field('dependency', $._unit_name))),
     ),
 
-    child_package: $ => seq(
+    package_statement: $ => seq(
       'pkg',
       field('name', $._unit_name),
+      repeat(seq(',', repeat($._newline), field('name', $._unit_name))),
+    ),
+
+    link_statement: $ => choice(
+      seq('link', field('source', choice($.identifier, alias('tree', $.identifier))),
+        field('target', $.identifier)),
+      seq('link', 'tree', field('source', $.identifier),
+        field('target', $.identifier),
+        optional(seq('ignore', field('rules', $.identifier)))),
     ),
 
     check_statement: $ => seq(

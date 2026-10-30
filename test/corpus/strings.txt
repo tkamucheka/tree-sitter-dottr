@@ -2,7 +2,7 @@
 Escapes
 ================================================================================
 
-pkg a do
+unit a do
   local A = "say \"hi\" \\ bye"
 end
 
@@ -27,7 +27,7 @@ end
 Interpolation
 ================================================================================
 
-pkg a do
+unit a do
   local A = "@{dottr.env.home}/@{B}@{C}"
 end
 
@@ -52,7 +52,7 @@ end
 Lone at sign
 ================================================================================
 
-pkg a do
+unit a do
   local A = "user@host @ end@"
 end
 
@@ -76,7 +76,7 @@ end
 Empty string value
 ================================================================================
 
-pkg a do
+unit a do
   local A = ""
 end
 
@@ -94,7 +94,7 @@ end
 Hash inside a string
 ================================================================================
 
-pkg a do
+unit a do
   local A = "#not a comment" # comment
 end
 

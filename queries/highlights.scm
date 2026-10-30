@@ -2,6 +2,8 @@
 
 [
   "pkg"
+  "unit"
+  "link"
   "do"
   "end"
   "local"
@@ -29,8 +31,18 @@
 (unit_declaration
   name: (_) @module)
 
-(child_package
+(package_declaration
   name: (_) @module)
+
+(package_statement
+  name: (_) @module)
+
+(link_statement
+  source: (identifier) @variable
+  target: (identifier) @variable)
+
+(link_statement
+  rules: (identifier) @variable)
 
 (needs_statement
   dependency: (_) @module)

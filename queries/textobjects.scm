@@ -67,7 +67,8 @@
 [
   (local_statement)
   (needs_statement)
-  (child_package)
+  (package_statement)
+  (link_statement)
   (check_statement)
   (create_statement)
   (apply_statement)

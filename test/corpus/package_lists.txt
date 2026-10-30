@@ -1,0 +1,116 @@
+================================================================================
+Package lists and continued dependencies
+================================================================================
+
+pkg git,
+    # packages
+    "curl", jq
+unit tools do
+  needs git,
+
+        jq
+  pkg tmux, jq
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (package_declaration
+    (identifier)
+    (comment)
+    (string
+      (string_content))
+    (identifier))
+  (unit_declaration
+    (identifier)
+    (unit_body
+      (needs_statement
+        (identifier)
+        (identifier))
+      (package_statement
+        (identifier)
+        (identifier)))))
+
+================================================================================
+Continued selectors and native links
+================================================================================
+
+on apt, # systems
+
+   pacman do
+  unit files do
+    link SOURCE TARGET
+    link tree SOURCE TARGET ignore RULES
+    link tree TARGET
+  end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (on_block
+    (system)
+    (comment)
+    (system)
+    (unit_list
+      (unit_declaration
+        (identifier)
+        (unit_body
+          (link_statement
+            (identifier)
+            (identifier))
+          (link_statement
+            (identifier)
+            (identifier)
+            (identifier))
+          (link_statement
+            (identifier)
+            (identifier)))))))
+
+================================================================================
+Old package block is rejected
+:error
+================================================================================
+
+pkg tools do
+end
+
+--------------------------------------------------------------------------------
+
+
+
+================================================================================
+Nested unit is rejected
+:error
+================================================================================
+
+unit outer do
+  unit inner do
+  end
+end
+
+--------------------------------------------------------------------------------
+
+
+
+================================================================================
+Trailing package comma is rejected
+:error
+================================================================================
+
+pkg git,
+
+--------------------------------------------------------------------------------
+
+
+
+================================================================================
+Unit keyword is reserved
+:error
+================================================================================
+
+pkg unit
+
+--------------------------------------------------------------------------------
+
+

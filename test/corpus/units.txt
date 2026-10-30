@@ -7,7 +7,7 @@ pkg git
 --------------------------------------------------------------------------------
 
 (source_file
-  (unit_declaration
+  (package_declaration
     (identifier)))
 
 ================================================================================
@@ -19,7 +19,7 @@ pkg "tree-sitter-cli"
 --------------------------------------------------------------------------------
 
 (source_file
-  (unit_declaration
+  (package_declaration
     (string
       (string_content))))
 
@@ -27,7 +27,7 @@ pkg "tree-sitter-cli"
 Block unit with empty body
 ================================================================================
 
-pkg a do
+unit a do
 end
 
 --------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ end
 Block unit with statements
 ================================================================================
 
-pkg tmux do
+unit tmux do
   needs git, "tree-sitter-cli"
   pkg tmux
   pkg "app-data"
@@ -56,9 +56,9 @@ end
         (identifier)
         (string
           (string_content)))
-      (child_package
+      (package_statement
         (identifier))
-      (child_package
+      (package_statement
         (string
           (string_content))))))
 
@@ -71,7 +71,7 @@ Multiple units and blank lines
 pkg a
 
 
-pkg b do
+unit b do
 
   needs a
 
@@ -81,7 +81,7 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (unit_declaration
+  (package_declaration
     (identifier))
   (unit_declaration
     (identifier)
@@ -93,7 +93,7 @@ end
 Last line without a line terminator
 ================================================================================
 
-pkg a do
+unit a do
   needs b
 end
 
@@ -115,5 +115,5 @@ pkg a
 --------------------------------------------------------------------------------
 
 (source_file
-  (unit_declaration
+  (package_declaration
     (identifier)))

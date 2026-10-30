@@ -123,26 +123,6 @@
     }
   },
   {
-    "type": "child_package",
-    "named": true,
-    "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "create_statement",
     "named": true,
     "fields": {
@@ -194,6 +174,42 @@
         "types": [
           {
             "type": "reference",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "link_statement",
+    "named": true,
+    "fields": {
+      "rules": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "source": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "target": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
             "named": true
           }
         ]
@@ -274,6 +290,46 @@
         "types": [
           {
             "type": "system",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "package_declaration",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "package_statement",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "string",
             "named": true
           }
         ]
@@ -376,6 +432,10 @@
           "named": true
         },
         {
+          "type": "package_declaration",
+          "named": true
+        },
+        {
           "type": "unit_declaration",
           "named": true
         }
@@ -430,11 +490,11 @@
           "named": true
         },
         {
-          "type": "child_package",
+          "type": "create_statement",
           "named": true
         },
         {
-          "type": "create_statement",
+          "type": "link_statement",
           "named": true
         },
         {
@@ -447,6 +507,10 @@
         },
         {
           "type": "on_block",
+          "named": true
+        },
+        {
+          "type": "package_statement",
           "named": true
         }
       ]
@@ -492,6 +556,10 @@
       "types": [
         {
           "type": "on_block",
+          "named": true
+        },
+        {
+          "type": "package_declaration",
           "named": true
         },
         {
@@ -583,8 +651,16 @@
     "named": true
   },
   {
+    "type": "ignore",
+    "named": false
+  },
+  {
     "type": "info_string",
     "named": true
+  },
+  {
+    "type": "link",
+    "named": false
   },
   {
     "type": "local",
@@ -621,6 +697,14 @@
   {
     "type": "system",
     "named": true
+  },
+  {
+    "type": "tree",
+    "named": false
+  },
+  {
+    "type": "unit",
+    "named": false
   },
   {
     "type": "}",

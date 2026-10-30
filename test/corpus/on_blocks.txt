@@ -10,18 +10,17 @@ on macos, windows do
 end
 
 --------------------------------------------------------------------------------
-
 (source_file
   (on_block
     (system)
     (system)
     (unit_list
-      (unit_declaration
+      (package_declaration
         (identifier))
       (on_block
         (system)
         (unit_list
-          (unit_declaration
+          (package_declaration
             (string
               (string_content))))))))
 
@@ -29,7 +28,7 @@ end
 On block in a unit
 ================================================================================
 
-pkg fd do
+unit fd do
   on apt do
     pkg "fd-find"
   end
@@ -48,7 +47,7 @@ end
       (on_block
         (system)
         (unit_body
-          (child_package
+          (package_statement
             (string
               (string_content)))))
       (on_block
@@ -56,7 +55,7 @@ end
         (system)
         (system)
         (unit_body
-          (child_package
+          (package_statement
             (identifier))
           (local_statement
             (identifier)
@@ -67,7 +66,7 @@ end
 On block in an action body
 ================================================================================
 
-pkg a do
+unit a do
   apply do
     on windows do
       shell do
@@ -102,8 +101,9 @@ On is reserved
 :error
 ================================================================================
 
-pkg a do
+unit a do
   local on = "x"
 end
 
 --------------------------------------------------------------------------------
+
